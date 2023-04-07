@@ -19,7 +19,7 @@ def about(request):
 def guitars_index(request):
     guitar = Guitar.objects.all()
     return render(request, 'guitars/index.html', {
-        'guitars': guitars
+        'guitar': guitar
     })
 
 def guitars_detail(request, guitar_id):
@@ -28,7 +28,7 @@ def guitars_detail(request, guitar_id):
     upgrade_guitar_doesnt_have = Upgrade.objects.exclude(id__in=id_list)
     updates_form = UpdatesForm()
     return render(request, 'guitars/detail.html', {
-        'guitars': guitars , 'updates_form' : updates_form, 'upgrade' : upgrade_guitar_doesnt_have
+        'guitar': guitar , 'updates_form' : updates_form, 'upgrade' : upgrade_guitar_doesnt_have
     })
 
 class GuitarCreate(CreateView):

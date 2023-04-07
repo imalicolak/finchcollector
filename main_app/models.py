@@ -33,7 +33,7 @@ class Guitar(models.Model):
         return f'{self.make} ({self.id})'
     
     def get_absolute_url(self):
-        return reverse ('detail', kwargs={'car_id' : self.id})
+        return reverse ('detail', kwargs={'guitar_id' : self.id})
     
     def updates_for_today(self):
         return self.updates_set.filter(date=date.today()).count() >= len(SERVICE)
