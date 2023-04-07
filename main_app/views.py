@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Car, Upgrade
+from .models import Guitar, Upgrade
 from .forms import UpdatesForm
 
 # Create your views here.
@@ -16,42 +16,42 @@ def about(request):
     return render(request, 'about.html')
 
 
-def cars_index(request):
-    cars = Car.objects.all()
-    return render(request, 'cars/index.html', {
-        'cars': cars
+def guitars_index(request):
+    guitar = Guitar.objects.all()
+    return render(request, 'guitars/index.html', {
+        'guitars': guitars
     })
 
-def cars_detail(request, car_id):
-    car = Car.objects.get(id=car_id)
-    id_list = car.upgrade.all().values_list('id')
-    upgrade_car_doesnt_have = Upgrade.objects.exclude(id__in=id_list)
+def guitars_detail(request, guitar_id):
+    guitar = Guitar.objects.get(id=guitar_id)
+    id_list = guitar.upgrade.all().values_list('id')
+    upgrade_guitar_doesnt_have = Upgrade.objects.exclude(id__in=id_list)
     updates_form = UpdatesForm()
-    return render(request, 'cars/detail.html', {
-        'car': car , 'updates_form' : updates_form, 'upgrade' : upgrade_car_doesnt_have
+    return render(request, 'guitars/detail.html', {
+        'guitars': guitars , 'updates_form' : updates_form, 'upgrade' : upgrade_guitar_doesnt_have
     })
 
-class CarCreate(CreateView):
-    model = Car
+class GuitarCreate(CreateView):
+    model = Guitar
     fields = ['make', 'model', 'year', 'description']
 
-class CarUpdate(UpdateView):
-  model = Car
+class GuitarUpdate(UpdateView):
+  model = Guitar
   fields = ['model', 'year', 'description']
 
-class CarDelete(DeleteView):
-  model = Car
-  success_url = '/cars'
+class GuitarDelete(DeleteView):
+  model = Guitar
+  success_url = '/guitars'
 
 
-def add_updates(request, car_id):
+def add_updates(request, guitar_id):
    form = UpdatesForm(request.POST)
    
    if form.is_valid():
     new_updates = form.save(commit=False)
-    new_updates.car_id = car_id
+    new_updates.guitar_id = guitar_id
     new_updates.save()
-    return redirect('detail', car_id=car_id)
+    return redirect('detail', guitar_id=guitar_id)
    
 
 class UpgradeList(ListView):
@@ -74,12 +74,12 @@ class UpgradeDelete(DeleteView):
 
 
 
-def assoc_upgrade(request, car_id, upgrade_id):
+def assoc_upgrade(request, guitar_id, upgrade_id):
   
-  Car.objects.get(id=car_id).upgrade.add(upgrade_id)
-  return redirect('detail', car_id=car_id)
+  Guitar.objects.get(id=guitar_id).upgrade.add(upgrade_id)
+  return redirect('detail', guitar_id=guitar_id)
 
 
-def delete_upgrade(request, car_id, upgrade_id):
-  Car.objects.get(id=car_id).upgrade.remove(upgrade_id)
-  return redirect('detail', car_id=upgrade_id )
+def delete_upgrade(request, guitar_id, upgrade_id):
+  Guitar.objects.get(id=guitar_id).upgrade.remove(upgrade_id)
+  return redirect('detail', guitar_id=upgrade_id )

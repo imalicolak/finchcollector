@@ -5,14 +5,12 @@ from datetime import date
 
 
 SERVICE = (
-    ('O', 'Oil change'),
-    ('T', 'Tire change'),
-    ('C', 'Check up')
+    ('S', 'String change'),
+    ('P', 'Pickup change'),
+    ('T', 'Tone upgrade')
 )
 
 # Create your models here.
-
-
 class Upgrade(models.Model):
   name = models.CharField(max_length=50)
   description = models.CharField(max_length=250)
@@ -24,7 +22,7 @@ class Upgrade(models.Model):
     return reverse('upgrade_detail', kwargs={'pk': self.id})
 
 
-class Car(models.Model):
+class Guitar(models.Model):
     make = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
     year = models.IntegerField()
@@ -45,7 +43,7 @@ class Car(models.Model):
 class Updates(models.Model):
     date = models.DateField('service date')
     service = models.CharField(max_length=1, choices=SERVICE, default=SERVICE[0][0])
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    guitar = models.ForeignKey(Guitar, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.get_service_display()} on {self.date}"
     

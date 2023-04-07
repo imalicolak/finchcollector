@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Car Details</h1>
+<h1>Guitar Details</h1>
 <div class="row">
   <div class="col s6">
     <div class="card">
@@ -12,8 +12,8 @@
         <p>Description: {{ car.description|linebreaks }}</p>
       </div>
         <div class="card-action">
-          <a href="{% url 'cars_update' car.id %}">Edit</a>
-          <a href="{% url 'cars_delete' car.id %}">Delete</a>
+          <a href="{% url 'guitars_update' guitar.id %}">Edit</a>
+          <a href="{% url 'guitars_delete' guitar.id %}">Delete</a>
         </div>
     </div>
   </div>
@@ -83,7 +83,7 @@
         </div>
       {% endfor %}
     {% else %}
-      <h5>{{car.make}} Already Has All Upgrades Available</h5>
+      <h5>{{car.make}} Already Has All Upgrades Made!</h5>
     {% endif %}
   </div>
 </div>
